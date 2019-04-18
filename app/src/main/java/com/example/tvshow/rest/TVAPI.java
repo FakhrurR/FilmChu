@@ -13,6 +13,9 @@ public interface TVAPI {
     @GET("tv/on_the_air")
     Call<TVResponse> getTVShows(@Query("api_key") String apiKey);
 
+    @GET("tv/popular")
+    Call<TVResponse> getPopuler(@Query("api_key") String apiKey);
+
     @GET("tv/{tv_id}/videos")
     Call<TVVideoResponse> getTVVideos(@Path("tv_id") int tv_id,
                                       @Query("api_key") String apiKey);

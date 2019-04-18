@@ -35,6 +35,8 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         tools:text="Date TV Show" />
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

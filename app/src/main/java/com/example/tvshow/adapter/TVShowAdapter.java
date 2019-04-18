@@ -49,7 +49,7 @@ public class TVShowAdapter extends RecyclerView.Adapter<TVShowAdapter.ShowViewHo
 
         Glide.with(context).load(Links.POSTER_BASE_URL + tv.getPosterPath()).into(holder.itemTvShowsBinding.image);
         holder.itemTvShowsBinding.title.setText(tv.getName());
-        holder.itemTvShowsBinding.releaseDate.setText(tv.getFirstAirDate());
+        holder.itemTvShowsBinding.releaseDate.setText(String.valueOf(tv.getPopularity()));
         holder.itemTvShowsBinding.rate.setText(vote);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
