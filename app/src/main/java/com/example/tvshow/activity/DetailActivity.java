@@ -67,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void detailvideo(int tv_id){
         LinearLayoutManager layoutManager =
-                new LinearLayoutManager(DetailActivity.this, HORIZONTAL,
+                new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL,
                         false);
         activityDetailBinding.detilbottom.rvVideo.setLayoutManager(layoutManager);
         TVService.getAPI().getTVVideos(tv_id,"a19e94729a2c8e318cfd20f0c661b21f").enqueue(new Callback<TVVideoResponse>() {
@@ -93,7 +93,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void detailReview(int tv_id){
         LinearLayoutManager layoutManager =
-                new LinearLayoutManager(DetailActivity.this, RecyclerView.HORIZONTAL,
+                new LinearLayoutManager(DetailActivity.this, RecyclerView.VERTICAL,
                         false);
         activityDetailBinding.detilbottom.rvReview.setLayoutManager(layoutManager);
 
@@ -102,7 +102,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
                 if(response.isSuccessful()) {
                     pDialog.dismiss();
-                   List<ReviewResponse.ResultsReview> reviews = response.body().getResults();
+                    List<ReviewResponse.ResultsReview> reviews = response.body().getResults();
                     ReviewAdapter adapter = new ReviewAdapter(reviews);
                     activityDetailBinding.detilbottom.rvReview.setAdapter(adapter);
                 }
