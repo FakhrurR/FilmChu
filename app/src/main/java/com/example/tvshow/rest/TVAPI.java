@@ -1,5 +1,6 @@
 package com.example.tvshow.rest;
 
+import com.example.tvshow.model.ReviewResponse;
 import com.example.tvshow.model.TVResponse;
 import com.example.tvshow.model.TVVideoResponse;
 
@@ -19,5 +20,9 @@ public interface TVAPI {
     @GET("tv/{tv_id}/videos")
     Call<TVVideoResponse> getTVVideos(@Path("tv_id") int tv_id,
                                       @Query("api_key") String apiKey);
+
+    @GET("tv/{tv_id}/reviews")
+    Call<ReviewResponse> getReviews(@Path("tv_id") int tv_id,
+                                    @Query("api_key") String apiKey);
 
 }

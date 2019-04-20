@@ -9,4 +9,7 @@
     <string name="text_tv_show_pupuler">Title</string>
     <string name="on_the_air">On The Air TV</string>
     <string name="populer_tv_shows">Popular</string>
+    <string name="label_review">Label Review</string>
+    <string name="content_reviews">Content Reviews</string>
+    <string name="reviews">Reviews</string>
 </resources>

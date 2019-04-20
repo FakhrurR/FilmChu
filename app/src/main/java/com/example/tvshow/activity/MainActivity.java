@@ -2,6 +2,7 @@ package com.example.tvshow.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -93,9 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void layouttvshows(){
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        activityMainBinding.onTheAir.tvRecycleview.setLayoutManager(layoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        activityMainBinding.onTheAir.tvRecycleview.setLayoutManager(gridLayoutManager);
         TVService.getAPI().getTVShows("a19e94729a2c8e318cfd20f0c661b21f").enqueue(new Callback<TVResponse>() {
             @Override
             public void onResponse(Call<TVResponse> call, Response<TVResponse> response) {

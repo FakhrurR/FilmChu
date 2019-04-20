@@ -3,6 +3,7 @@ package com.example.tvshow.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,14 +15,18 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.tvshow.Links;
 import com.example.tvshow.R;
+import com.example.tvshow.adapter.ReviewAdapter;
 import com.example.tvshow.adapter.TVShowAdapter;
 import com.example.tvshow.adapter.VideoAdapter;
 import com.example.tvshow.databinding.ActivityDetailBinding;
+import com.example.tvshow.model.ReviewResponse;
 import com.example.tvshow.model.TVResponse;
 import com.example.tvshow.model.TVVideoResponse;
 import com.example.tvshow.rest.TVService;
 
 import java.util.List;
+
+import static androidx.recyclerview.widget.LinearLayoutManager.*;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -45,8 +50,8 @@ public class DetailActivity extends AppCompatActivity {
         activityDetailBinding = DataBindingUtil.setContentView(this,R.layout.activity_detail);
 
         detailview(tv);
-        initRecyclerView();
         detailvideo(tv.getId());
+        detailReview(tv.getId());
     }
 
     private  void detailview(TVResponse.ResultsTVShow tv){
@@ -60,14 +65,11 @@ public class DetailActivity extends AppCompatActivity {
         Glide.with(this).load(Links.BACKDROP_BASE_URL + tv.getBackdropPath()).into(activityDetailBinding.detiltop.backropImage);
     }
 
-    private void initRecyclerView() {
+    private void detailvideo(int tv_id){
         LinearLayoutManager layoutManager =
-                new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL,
+                new LinearLayoutManager(DetailActivity.this, HORIZONTAL,
                         false);
         activityDetailBinding.detilbottom.rvVideo.setLayoutManager(layoutManager);
-    }
-
-    private void detailvideo(int tv_id){
         TVService.getAPI().getTVVideos(tv_id,"a19e94729a2c8e318cfd20f0c661b21f").enqueue(new Callback<TVVideoResponse>() {
             @Override
             public void onResponse(Call<TVVideoResponse> call, Response<TVVideoResponse> response) {
@@ -85,6 +87,31 @@ public class DetailActivity extends AppCompatActivity {
                 pDialog.dismiss();
                 Toast.makeText(DetailActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
 
+            }
+        });
+    }
+
+    private void detailReview(int tv_id){
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(DetailActivity.this, RecyclerView.HORIZONTAL,
+                        false);
+        activityDetailBinding.detilbottom.rvReview.setLayoutManager(layoutManager);
+
+        TVService.getAPI().getReviews(tv_id,"a19e94729a2c8e318cfd20f0c661b21f").enqueue(new Callback<ReviewResponse>() {
+            @Override
+            public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
+                if(response.isSuccessful()) {
+                    pDialog.dismiss();
+                   List<ReviewResponse.ResultsReview> reviews = response.body().getResults();
+                    ReviewAdapter adapter = new ReviewAdapter(reviews);
+                    activityDetailBinding.detilbottom.rvReview.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewResponse> call, Throwable t) {
+                pDialog.dismiss();
+                Toast.makeText(DetailActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

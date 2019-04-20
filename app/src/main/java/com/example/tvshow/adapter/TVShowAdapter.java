@@ -47,7 +47,7 @@ public class TVShowAdapter extends RecyclerView.Adapter<TVShowAdapter.ShowViewHo
 
         String vote = String.valueOf(tv.getVoteAverage());
 
-        Glide.with(context).load(Links.POSTER_BASE_URL + tv.getPosterPath()).into(holder.itemTvShowsBinding.image);
+        Glide.with(context).load(Links.BACKDROP_BASE_URL + tv.getBackdropPath()).into(holder.itemTvShowsBinding.image);
         holder.itemTvShowsBinding.title.setText(tv.getName());
         holder.itemTvShowsBinding.releaseDate.setText(String.valueOf(tv.getPopularity()));
         holder.itemTvShowsBinding.rate.setText(vote);
